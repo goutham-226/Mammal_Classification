@@ -1,0 +1,36 @@
+# Dataset (download separately — see README)
+mammals/
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Saved models / weights
+*.h5
+*.keras
+*.pb
+checkpoints/
+saved_model/
+logs/
+
+# Jupyter
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# macOS
+.DS_Store
+._*
+
+# Editors
+.vscode/
+.idea/
+
+# Env vars
+.env
