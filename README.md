@@ -30,9 +30,21 @@ pip install tensorflow scikit-learn matplotlib numpy pillow scipy jupyter
 
 On Apple Silicon, `pip install tensorflow-metal` adds GPU acceleration. It's optional and occasionally fussy about versions, so add it only if CPU training is too slow.
 
-## Dataset layout
+## Dataset
 
-The notebook expects an image directory with one subfolder per class. Keras infers the labels from the folder names, and the folder count must match the size of the final `Dense` layer (currently 45).
+This project uses the [Mammals Image Classification Dataset (45 Animals)](https://www.kaggle.com/datasets/asaniczka/mammals-image-classification-dataset-45-animals) by asaniczka on Kaggle — an original dataset containing images across 45 mammal classes.
+
+The images are **not committed to this repository.** Download them yourself:
+
+```bash
+pip install kaggle
+# place your kaggle.json API token at ~/.kaggle/kaggle.json first
+kaggle datasets download -d asaniczka/mammals-image-classification-dataset-45-animals --unzip -p .
+```
+
+You can get `kaggle.json` from your Kaggle account settings under "API" → "Create New Token". On macOS/Linux, `chmod 600 ~/.kaggle/kaggle.json` after saving it, or the CLI will refuse to run.
+
+After unzipping, rename or move the extracted folder so it sits at `mammals/`, with one subfolder per class. Keras infers the labels from the folder names, and the folder count must match the size of the final `Dense` layer (45).
 
 ```
 .
@@ -41,14 +53,16 @@ The notebook expects an image directory with one subfolder per class. Keras infe
 │   ├── african_elephant/
 │   │   ├── img001.jpg
 │   │   └── ...
+│   ├── bat/
 │   ├── bear/
-│   ├── bobcat/
 │   └── ...            (45 class folders total)
 └── test/
     └── bear.jpg       used by the single-image prediction cell
 ```
 
 Paths in the notebook are relative, and they resolve from the directory Jupyter was launched in — not from the notebook file. If `flow_from_directory` reports "Found 0 images belonging to 0 classes", that mismatch is usually the cause.
+
+The `test/` folder isn't part of the download — create it yourself and drop in any mammal photo you want to run a single prediction on.
 
 ## Running it
 
@@ -91,3 +105,7 @@ validation_iterator = validation_data.flow_from_directory(
 **PyDataset warning on `fit()`.** A `UserWarning` about `super().__init__(**kwargs)` comes from Keras's own legacy `DirectoryIterator`, not from this notebook. It's harmless; the practical effect is that `workers` and `use_multiprocessing` have no effect, so data loading stays single-threaded.
 
 **`ImageDataGenerator` is deprecated.** It still works in Keras 3 as legacy code but is no longer maintained. `tf.keras.utils.image_dataset_from_directory` combined with augmentation layers (`RandomFlip`, `RandomRotation`, `RandomZoom`) is the current approach and is noticeably faster.
+
+## Credits
+
+Dataset: [Mammals Image Classification Dataset (45 Animals)](https://www.kaggle.com/datasets/asaniczka/mammals-image-classification-dataset-45-animals) by asaniczka, via Kaggle. Refer to the dataset page for its license and terms of use.
