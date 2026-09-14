@@ -1,3 +1,4 @@
+<div align="center">
 # Mammal Classification
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
@@ -9,6 +10,7 @@
 ![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
 
 A convolutional neural network built with TensorFlow/Keras that classifies images of mammals into 45 species categories.
+</div>
 
 ## Overview
 
